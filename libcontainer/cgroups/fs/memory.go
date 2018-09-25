@@ -24,6 +24,10 @@ const (
 	cgroupMemoryLimit       = "memory.limit_in_bytes"
 )
 
+var (
+	disableKernelMemoryAccounting = os.Getenv("DISABLE_KERNEL_MEMORY_ACCOUNTING")
+)
+
 type MemoryGroup struct {
 }
 
@@ -81,6 +85,10 @@ func EnableKernelMemoryAccounting(path string) error {
 }
 
 func setKernelMemory(path string, kernelMemoryLimit int64) error {
+	// Force disable kernel memory accounting on kernel <= 3.10 (RedHat, CentOS, ...)
+	if disableKernelMemoryAccounting != "" {
+		return nil
+	}
 	if path == "" {
 		return fmt.Errorf("no such directory for %s", cgroupKernelMemoryLimit)
 	}

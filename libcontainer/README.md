@@ -320,6 +320,10 @@ If you don't already  have `criu` installed, you can build it from source, follo
 [online instructions](http://criu.org/Installation). `criu` is also installed in the docker image
 generated when building libcontainer with docker.
 
+#### Misc
+
+libcontainer can disable memory accounting when environment variable `DISABLE_KERNEL_MEMORY_ACCOUNTING` is set.
+This can be usefull when running container on RedHat/CentOS with kernel <= 3.10.
 
 ## Copyright and license
 
